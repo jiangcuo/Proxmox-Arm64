@@ -1,0 +1,86 @@
+diff -u1 -r -x rej pve-src/proxmox-backup-restore-image/debian/control pve-maker/proxmox-backup-restore-image/debian/control
+--- pve-src/proxmox-backup-restore-image/debian/control	2022-10-10 03:21:00.475765775 +0000
++++ pve-maker/proxmox-backup-restore-image/debian/control	2022-10-10 07:39:09.341330888 +0000
+@@ -31,3 +31,3 @@
+ Package: proxmox-backup-restore-image
+-Architecture: amd64
++Architecture: arm64
+ Recommends: proxmox-backup-file-restore
+@@ -39,3 +39,3 @@
+ Package: proxmox-backup-restore-image-debug
+-Architecture: amd64
++Architecture: arm64
+ Depends: proxmox-backup-restore-image
+diff -u1 -r -x rej pve-src/proxmox-backup-restore-image/debian/install pve-maker/proxmox-backup-restore-image/debian/install
+--- pve-src/proxmox-backup-restore-image/debian/install	2022-10-10 03:21:00.475765775 +0000
++++ pve-maker/proxmox-backup-restore-image/debian/install	2022-10-10 07:39:09.341330888 +0000
+@@ -1,2 +1,2 @@
+-build/bzImage /usr/lib/x86_64-linux-gnu/proxmox-backup/file-restore/
+-build/initramfs/initramfs.img /usr/lib/x86_64-linux-gnu/proxmox-backup/file-restore/
++build/Image /usr/lib/aarch64-linux-gnu/proxmox-backup/file-restore/
++build/initramfs/initramfs.img /usr/lib/aarch64-linux-gnu/proxmox-backup/file-restore/
+diff -u1 -r -x rej pve-src/proxmox-backup-restore-image/debian/proxmox-backup-restore-image-debug.install pve-maker/proxmox-backup-restore-image/debian/proxmox-backup-restore-image-debug.install
+--- pve-src/proxmox-backup-restore-image/debian/proxmox-backup-restore-image-debug.install	2022-10-10 03:21:00.475765775 +0000
++++ pve-maker/proxmox-backup-restore-image/debian/proxmox-backup-restore-image-debug.install	2022-10-10 07:39:09.341330888 +0000
+@@ -1 +1 @@
+-build/initramfs/initramfs-debug.img /usr/lib/x86_64-linux-gnu/proxmox-backup/file-restore/
++build/initramfs/initramfs-debug.img /usr/lib/aarch64-linux-gnu/proxmox-backup/file-restore/
+diff -u1 -r -x rej pve-src/proxmox-backup-restore-image/src/Makefile pve-maker/proxmox-backup-restore-image/src/Makefile
+--- pve-src/proxmox-backup-restore-image/src/Makefile	2022-10-10 03:21:00.475765775 +0000
++++ pve-maker/proxmox-backup-restore-image/src/Makefile	2022-10-10 07:40:44.641530855 +0000
+@@ -9,3 +9,3 @@
+ 
+-KERNEL_IMG=${BUILDDIR}/bzImage
++KERNEL_IMG=${BUILDDIR}/Image
+ INITRAMFS_IMG=${INITRAMFS_BUILDDIR}/initramfs.img
+@@ -57,3 +57,3 @@
+ 	cd ${BUILDDIR}/${KERNEL_SUBMODULE}; $(MAKE)
+-	mv ${BUILDDIR}/${KERNEL_SUBMODULE}/arch/x86/boot/bzImage ${KERNEL_IMG}
++	mv ${BUILDDIR}/${KERNEL_SUBMODULE}/arch/arm64/boot/Image ${KERNEL_IMG}
+ 
+@@ -83,3 +83,3 @@
+ 	# kernel/init-shim-rs builds
+-	qemu-system-x86_64 -serial stdio -vnc none -enable-kvm \
++	qemu-system-aarch64 -serial stdio -vnc none -enable-kvm \
+ 	    -kernel ${KERNEL_IMG} \
+diff -u1 -r -x rej pve-src/proxmox-backup-restore-image/src/build_initramfs.sh pve-maker/proxmox-backup-restore-image/src/build_initramfs.sh
+--- pve-src/proxmox-backup-restore-image/src/build_initramfs.sh	2022-10-10 03:21:00.475765775 +0000
++++ pve-maker/proxmox-backup-restore-image/src/build_initramfs.sh	2022-10-10 07:39:09.341330888 +0000
+@@ -47,14 +47,14 @@
+ add_pkgs "
+-    libstdc++6:amd64 \
+-    libssl1.1:amd64 \
+-    libacl1:amd64 \
+-    libblkid1:amd64 \
+-    libuuid1:amd64 \
+-    zlib1g:amd64 \
+-    libzstd1:amd64 \
+-    liblz4-1:amd64 \
+-    liblzma5:amd64 \
+-    libgcrypt20:amd64 \
+-    lvm2:amd64 \
+-    thin-provisioning-tools:amd64 \
++    libstdc++6:arm64 \
++    libssl1.1:arm64 \
++    libacl1:arm64 \
++    libblkid1:arm64 \
++    libuuid1:arm64 \
++    zlib1g:arm64 \
++    libzstd1:arm64 \
++    liblz4-1:arm64 \
++    liblzma5:arm64 \
++    libgcrypt20:arm64 \
++    lvm2:arm64 \
++    thin-provisioning-tools:arm64 \
+ "
+@@ -77,6 +77,6 @@
+ add_pkgs "
+-    util-linux:amd64 \
+-    busybox-static:amd64 \
+-    gdb:amd64 \
+-    strace:amd64 \
++    util-linux:arm64 \
++    busybox-static:arm64 \
++    gdb:arm64 \
++    strace:arm64 \
+ "

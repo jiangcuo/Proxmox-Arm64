@@ -1,0 +1,10 @@
+--- a/pve-manager/debian/control      2022-09-08 01:24:53.471454103 -0400
++++ b/pve-manager/debian/control     2022-09-08 11:46:36.571365001 -0400
+@@ -38,7 +38,6 @@
+          fonts-font-awesome,
+          gdisk,
+          hdparm,
+-         ifupdown2 (>= 2.0.1-1+pve8) | ifenslave (>= 2.6),
+          libapt-pkg-perl,
+          libc6 (>= 2.14),
+          libcrypt-ssleay-perl,

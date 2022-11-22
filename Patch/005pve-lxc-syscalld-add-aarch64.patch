@@ -1,0 +1,67 @@
+diff -ur -x .git a/pve-lxc-syscalld/src/macros.rs b/pve-lxc-syscalld/src/macros.rs
+--- a/pve-lxc-syscalld/src/macros.rs     2022-09-11 12:51:22.984264183 +0000
++++ b/pve-lxc-syscalld/src/macros.rs     2022-09-11 12:52:58.512311468 +0000
+@@ -1,7 +1,6 @@
+ // c_str!() from the byte-strings crate is implemented via a proc macro which seems a bit excessive
+ macro_rules! c_str {
+     ($data:expr) => {{
+-        #![allow(unused_unsafe)]
+         let bytes = concat!($data, "\0");
+         unsafe { std::ffi::CStr::from_bytes_with_nul_unchecked(bytes.as_bytes()) }
+     }};
+diff -ur -x .git a/pve-lxc-syscalld/src/sys_quotactl.rs b/pve-lxc-syscalld/src/sys_quotactl.rs
+--- a/pve-lxc-syscalld/src/sys_quotactl.rs       2022-09-11 12:51:22.984264183 +0000
++++ b/pve-lxc-syscalld/src/sys_quotactl.rs       2022-09-11 12:52:34.832293930 +0000
+@@ -113,7 +113,7 @@
+         let mut data: dqinfo = unsafe { mem::zeroed() };
+         let special = special.as_ref().map(|c| c.as_ptr()).unwrap_or(ptr::null());
+         sc_libc_try!(unsafe {
+-            libc::quotactl(cmd, special, id, &mut data as *mut dqinfo as *mut i8)
++            libc::quotactl(cmd, special, id, &mut data as *mut dqinfo as *mut libc::c_char)
+         });
+ 
+         msg.mem_write_struct(addr, &data)?;
+@@ -143,7 +143,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut dqinfo as *mut i8,
++                &mut data as *mut dqinfo as *mut libc::c_char,
+             )
+         });
+ 
+@@ -166,7 +166,7 @@
+ 
+         let mut data: u32 = 0;
+         let special = special.as_ref().map(|c| c.as_ptr()).unwrap_or(ptr::null());
+-        sc_libc_try!(unsafe { libc::quotactl(cmd, special, id, &mut data as *mut u32 as *mut i8) });
++        sc_libc_try!(unsafe { libc::quotactl(cmd, special, id, &mut data as *mut u32 as *mut libc::c_char) });
+ 
+         msg.mem_write_struct(addr, &data)?;
+         Ok(SyscallStatus::Ok(0))
+@@ -257,7 +257,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut libc::dqblk as *mut i8,
++                &mut data as *mut libc::dqblk as *mut libc::c_char,
+             )
+         });
+ 
+@@ -290,7 +290,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut libc::dqblk as *mut i8,
++                &mut data as *mut libc::dqblk as *mut libc::c_char,
+             )
+         });
+ 
+@@ -323,7 +323,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut nextdqblk as *mut i8,
++                &mut data as *mut nextdqblk as *mut libc::c_char,
+             )
+         });
