@@ -1,22 +1,3 @@
-diff -uNr -x .git a/qemu-server/debian/changelog b/qemu-server/debian/changelog
---- a/qemu-server/debian/changelog	2022-09-16 06:25:27.919683004 -0400
-+++ b/qemu-server/debian/changelog	2022-09-16 06:52:06.358798642 -0400
-@@ -1,3 +1,15 @@
-+qemu-server (7.2-4) bullseye; urgency=medium  
-+
-+  * add aarch64 pcie1-3 support
-+
-+  * add aarch64 efi
-+
-+  * add aarch64 tpm
-+
-+  * set gic_version=host
-+
-+ -- foxi <jiangcuo@bingsin.com>  Tue, 28 Aug 2022 13:59:20 +0200
-+
- qemu-server (7.2-4) bullseye; urgency=medium
- 
-   * fix #3754: encode JSON as utf8 for CLI
 diff -uNr -x .git a/qemu-server/debian/control b/qemu-server/debian/control
 --- a/qemu-server/debian/control	2022-09-16 06:25:27.919683004 -0400
 +++ b/qemu-server/debian/control	2022-09-16 06:37:17.922362062 -0400

@@ -10,22 +10,6 @@ diff -u1 -r pve-old/pve-manager/Makefile pve-maker/pve-manager/Makefile
 -	${MAKE} -C www check
 -
  .PHONY: dinstall
-diff -u1 -r pve-old/pve-manager/debian/changelog pve-maker/pve-manager/debian/changelog
---- pve-old/pve-manager/debian/changelog	2022-10-10 08:23:17.622027408 +0000
-+++ pve-maker/pve-manager/debian/changelog	2022-10-10 08:28:42.187372509 +0000
-@@ -2,2 +2,12 @@
- 
-+  * add default cpu type to host
-+  
-+  * add ramfb support
-+
-+  * set default cdrom to scsi2
-+
-+ -- foxi <jiangcuo@bingsin.com>  Mon, 10 Oct 2022 16:00:20 +0200
-+
-+pve-manager (7.2-11) bullseye; urgency=medium
-+
-   * d/control: recommend proxmox-offline-mirror-helper
 diff -u1 -r pve-old/pve-manager/debian/control pve-maker/pve-manager/debian/control
 --- pve-old/pve-manager/debian/control	2022-10-10 08:24:15.066268657 +0000
 +++ pve-maker/pve-manager/debian/control	2022-10-10 08:36:56.911562195 +0000
@@ -102,21 +86,6 @@ diff -u1 -r pve-old/qemu-server/PVE/QemuServer.pm pve-maker/qemu-server/PVE/Qemu
 +	   $conf, $vga, $arch, $machine_version, $machine_type, undef, $qxlnum, $bridges);
 +    }
  	push @$cmd, '-display', 'egl-headless,gl=core' if $vga->{type} eq 'virtio-gl'; # VIRGL
-diff -u1 -r pve-old/qemu-server/debian/changelog pve-maker/qemu-server/debian/changelog
---- pve-old/qemu-server/debian/changelog	2022-10-10 08:24:15.046268574 +0000
-+++ pve-maker/qemu-server/debian/changelog	2022-10-10 08:17:47.876601814 +0000
-@@ -1 +1,11 @@
-+qemu-server (7.2-4) bullseye; urgency=medium
-+
-+  * add default cpu type to host
-+  
-+  * add ramfb support
-+
-+  * set default cdrom to scsi2
-+
-+ -- foxi <jiangcuo@bingsin.com>  Mon, 10 Oct 2022 16:00:20 +0200
-+
- qemu-server (7.2-4) bullseye; urgency=medium  
 diff -u1 -r pve-old/qemu-server/debian/control pve-maker/qemu-server/debian/control
 --- pve-old/qemu-server/debian/control	2022-10-10 08:24:15.050268590 +0000
 +++ pve-maker/qemu-server/debian/control	2022-10-10 08:38:03.203670606 +0000
