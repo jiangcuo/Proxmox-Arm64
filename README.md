@@ -31,7 +31,7 @@ You need first change dhcp to static and install ifupdown or ifupdown2 avoid los
 - tpm
 
 ## version
-- public version = 7.2-11
-- testing version = 7.2-15
+- public version = 7.3-3
+- testing version = 7.3-3
 
 
