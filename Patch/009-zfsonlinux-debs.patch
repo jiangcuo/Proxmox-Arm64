@@ -1,0 +1,38 @@
+--- pve-src/zfsonlinux/Makefile	2022-10-12 03:57:46.836052307 +0000
++++ pve-maker/zfsonlinux/Makefile	2022-12-21 06:23:46.768790708 +0000
+@@ -6,23 +6,23 @@
+ ZFSDIR=zfs-linux_${ZFSVER}
+ ZFSSRC=upstream
+ 
+-ZFS_DEB1= libnvpair3linux_${ZFSPKGVER}_amd64.deb
++ZFS_DEB1= libnvpair3linux_${ZFSPKGVER}_arm64.deb
+ 
+ ZFS_DEB_BINARY =				\
+-libpam-zfs_${ZFSPKGVER}_amd64.deb		\
+-libuutil3linux_${ZFSPKGVER}_amd64.deb		\
+-libzfs4linux_${ZFSPKGVER}_amd64.deb		\
+-libzfsbootenv1linux_${ZFSPKGVER}_amd64.deb	\
+-libzpool5linux_${ZFSPKGVER}_amd64.deb		\
+-zfs-test_${ZFSPKGVER}_amd64.deb			\
+-zfsutils-linux_${ZFSPKGVER}_amd64.deb		\
+-zfs-zed_${ZFSPKGVER}_amd64.deb
++libpam-zfs_${ZFSPKGVER}_arm64.deb		\
++libuutil3linux_${ZFSPKGVER}_arm64.deb		\
++libzfs4linux_${ZFSPKGVER}_arm64.deb		\
++libzfsbootenv1linux_${ZFSPKGVER}_arm64.deb	\
++libzpool5linux_${ZFSPKGVER}_arm64.deb		\
++zfs-test_${ZFSPKGVER}_arm64.deb			\
++zfsutils-linux_${ZFSPKGVER}_arm64.deb		\
++zfs-zed_${ZFSPKGVER}_arm64.deb
+ 
+-ZFS_DBG_DEBS = $(patsubst %_${ZFSPKGVER}_amd64.deb, %-dbgsym_${ZFSPKGVER}_amd64.deb, ${ZFS_DEB1} ${ZFS_DEB_BINARY})
++ZFS_DBG_DEBS = $(patsubst %_${ZFSPKGVER}_arm64.deb, %-dbgsym_${ZFSPKGVER}_arm64.deb, ${ZFS_DEB1} ${ZFS_DEB_BINARY})
+ 
+ ZFS_DEB2= ${ZFS_DEB_BINARY}			\
+-libzfslinux-dev_${ZFSPKGVER}_amd64.deb		\
+-python3-pyzfs_${ZFSPKGVER}_amd64.deb		\
++libzfslinux-dev_${ZFSPKGVER}_arm64.deb		\
++python3-pyzfs_${ZFSPKGVER}_arm64.deb		\
+ pyzfs-doc_${ZFSPKGVER}_all.deb			\
+ spl_${ZFSPKGVER}_all.deb			\
+ zfs-initramfs_${ZFSPKGVER}_all.deb
