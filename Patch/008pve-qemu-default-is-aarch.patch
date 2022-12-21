@@ -1,0 +1,23 @@
+diff -ur pve-src/pve-qemu/debian/pve-qemu-kvm.links pve-maker/pve-qemu/debian/pve-qemu-kvm.links
+--- pve-src/pve-qemu/debian/pve-qemu-kvm.links	2022-10-09 14:10:22.324534118 +0000
++++ pve-maker/pve-qemu/debian/pve-qemu-kvm.links	2022-12-21 03:50:20.334059370 +0000
+@@ -1,7 +1,4 @@
+-usr/bin/qemu-system-x86_64 usr/bin/kvm
+-
+-# qemu-system-i386 and qemu-system-x86_64 provides the same hardware emulation
+-usr/bin/qemu-system-x86_64 usr/bin/qemu-system-i386
++usr/bin/qemu-system-aarch64 usr/bin/kvm
+ 
+ # also use aarch64 for 32 bit arm
+ usr/bin/qemu-system-aarch64 usr/bin/qemu-system-arm
+diff -ur pve-src/pve-qemu/debian/rules pve-maker/pve-qemu/debian/rules
+--- pve-src/pve-qemu/debian/rules	2022-12-16 12:44:59.919592525 +0000
++++ pve-maker/pve-qemu/debian/rules	2022-12-21 03:49:27.660434980 +0000
+@@ -46,7 +46,6 @@
+ 	--localstatedir=/var \
+ 	--prefix=/usr \
+ 	--sysconfdir=/etc \
+-	--target-list=$(ARCH)-softmmu,aarch64-softmmu \
+ 	--with-suffix="kvm" \
+ 	--with-pkgversion="${DEB_SOURCE}_${DEB_VERSION_UPSTREAM_REVISION}" \
+ 	--audio-drv-list="alsa" \
