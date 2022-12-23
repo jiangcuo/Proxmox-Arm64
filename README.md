@@ -49,7 +49,7 @@ curl -L  https://foxi.buduanwang.vip/pan/foxi/Virtualization/proxmox/foxi/gpg.ke
 
 ###pve
 - public version = 7.3-3
-- testing version = 7.3-3
+- testing version = 7.3-4
 
 ###pbs
 - public version = 2.3.1-1
