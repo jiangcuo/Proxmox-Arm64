@@ -64,7 +64,7 @@ install proxmox-ve arm on you arm  machine(pimox is ok). or use docker `https://
 echo "deb https://foxi.buduanwang.vip/pan/foxi/Virtualization/proxmox/foxi/ pvearmdev main">/etc/apt/sources.list.d/foxi-devel.list
 curl -L  https://foxi.buduanwang.vip/pan/foxi/Virtualization/proxmox/foxi/gpg.key |apt-key add 
 ```
-### Some pkg
+### Some pkgs
 ```
 apt-get install devscripts build-essential autotools-dev autogen dh-autoreconf dkms doxygen check pkg-config \
 groff quilt dpatch automake autoconf libtool lintian libdevel-cycle-perl \
