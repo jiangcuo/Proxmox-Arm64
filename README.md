@@ -30,8 +30,8 @@
 ### Proxmox VE
 
 ```
-echo "deb https://foxi.buduanwang.vip/pan/foxi/Virtualization/proxmox/foxi/ bullseye main">/etc/apt/sources.list.d/foxi.list
-curl -L  https://foxi.buduanwang.vip/pan/foxi/Virtualization/proxmox/foxi/gpg.key |apt-key add 
+echo "deb https://mirrors.apqa.cn/proxmox/ pvearm main ">/etc/apt/sources.list.d/foxi.list
+curl -L https://mirrors.apqa.cn/proxmox/gpg.key |apt-key add 
 ```
 
 You need first change dhcp to static and install ifupdown or ifupdown2 avoid losing network connectivity during installation( we remove the ifupdown2 in pve-manager depends, but we still recommend install it first).
@@ -45,8 +45,8 @@ apt install proxmox-ve -y
 ### Proxmox Backup Server
 
 ```
-echo "deb https://foxi.buduanwang.vip/pan/foxi/Virtualization/proxmox/foxi/ pbsarm main">/etc/apt/sources.list.d/foxi-pbs.list
-curl -L  https://foxi.buduanwang.vip/pan/foxi/Virtualization/proxmox/foxi/gpg.key |apt-key add 
+echo "deb deb https://mirrors.apqa.cn/proxmox/ pbsarm main">/etc/apt/sources.list.d/foxi-pbs.list
+curl -L  deb https://mirrors.apqa.cn/proxmox/gpg.key |apt-key add 
 apt update && DEBIAN_FRONTEND=noninteractiv apt --no-install-recommends install proxmox-backup-server 
 ```
 
