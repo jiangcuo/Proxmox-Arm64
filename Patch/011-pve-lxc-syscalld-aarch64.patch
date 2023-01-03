@@ -1,0 +1,56 @@
+diff -ur pve-src/pve-lxc-syscalld/src/sys_quotactl.rs pve-maker/pve-lxc-syscalld/src/sys_quotactl.rs
+--- pve-src/pve-lxc-syscalld/src/sys_quotactl.rs        2022-10-10 03:22:05.647860888 +0000
++++ pve-maker/pve-lxc-syscalld/src/sys_quotactl.rs      2023-01-03 08:16:45.047773225 +0000
+@@ -113,7 +113,7 @@
+         let mut data: dqinfo = unsafe { mem::zeroed() };
+         let special = special.as_ref().map(|c| c.as_ptr()).unwrap_or(ptr::null());
+         sc_libc_try!(unsafe {
+-            libc::quotactl(cmd, special, id, &mut data as *mut dqinfo as *mut i8)
++            libc::quotactl(cmd, special, id, &mut data as *mut dqinfo as *mut libc::c_char)
+         });
+ 
+         msg.mem_write_struct(addr, &data)?;
+@@ -143,7 +143,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut dqinfo as *mut i8,
++                &mut data as *mut dqinfo as *mut libc::c_char,
+             )
+         });
+ 
+@@ -166,7 +166,7 @@
+ 
+         let mut data: u32 = 0;
+         let special = special.as_ref().map(|c| c.as_ptr()).unwrap_or(ptr::null());
+-        sc_libc_try!(unsafe { libc::quotactl(cmd, special, id, &mut data as *mut u32 as *mut i8) });
++        sc_libc_try!(unsafe { libc::quotactl(cmd, special, id, &mut data as *mut u32 as *mut libc::c_char) });
+ 
+         msg.mem_write_struct(addr, &data)?;
+         Ok(SyscallStatus::Ok(0))
+@@ -257,7 +257,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut libc::dqblk as *mut i8,
++                &mut data as *mut libc::dqblk as *mut libc::c_char,
+             )
+         });
+ 
+@@ -290,7 +290,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut libc::dqblk as *mut i8,
++                &mut data as *mut libc::dqblk as *mut libc::c_char,
+             )
+         });
+ 
+@@ -323,7 +323,7 @@
+                 cmd,
+                 special.as_ptr(),
+                 id,
+-                &mut data as *mut nextdqblk as *mut i8,
++                &mut data as *mut nextdqblk as *mut libc::c_char,
+             )
+         });
