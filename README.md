@@ -45,7 +45,7 @@ apt install proxmox-ve -y
 ### Proxmox Backup Server
 
 ```
-echo "deb deb https://mirrors.apqa.cn/proxmox/ pbsarm main">/etc/apt/sources.list.d/foxi-pbs.list
+echo "deb https://mirrors.apqa.cn/proxmox/ pbsarm main">/etc/apt/sources.list.d/foxi-pbs.list
 curl -L  deb https://mirrors.apqa.cn/proxmox/gpg.key |apt-key add 
 apt update && DEBIAN_FRONTEND=noninteractiv apt --no-install-recommends install proxmox-backup-server 
 ```
