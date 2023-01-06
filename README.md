@@ -25,30 +25,16 @@
 - public version = 2.3.1-1
 - testing version = 2.3.1-1
 
-## 4. Install pve & pbs from repo
+## 4. Installtion
 
-### Proxmox VE
+If you are using arm64 server that supports EFI,you can install proxmox-ve with iso.
 
-```
-echo "deb https://mirrors.apqa.cn/proxmox/ pvearm main ">/etc/apt/sources.list.d/foxi.list
-curl -L https://mirrors.apqa.cn/proxmox/gpg.key |apt-key add 
-```
+https://mirrors.apqa.cn/proxmox-edge/unofficialiso/proxmox-ve-arm64_7.3-1.iso 
 
-You need first change dhcp to static and install ifupdown or ifupdown2 avoid losing network connectivity during installation( we remove the ifupdown2 in pve-manager depends, but we still recommend install it first).
+If you are using u-boot device, you can install proxmox-ve from repo.
 
-```
-apt update 
-apt install ifupdown2 -y
-apt install proxmox-ve -y
-```
+Head to the wiki page to learn more.
 
-### Proxmox Backup Server
-
-```
-echo "deb https://mirrors.apqa.cn/proxmox/ pbsarm main">/etc/apt/sources.list.d/foxi-pbs.list
-curl -L  deb https://mirrors.apqa.cn/proxmox/gpg.key |apt-key add 
-apt update && DEBIAN_FRONTEND=noninteractiv apt --no-install-recommends install proxmox-backup-server 
-```
 
 ## More ?
 
