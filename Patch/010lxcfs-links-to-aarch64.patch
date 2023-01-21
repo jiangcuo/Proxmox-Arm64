@@ -1,0 +1,6 @@
+diff -ur pve-src/lxcfs/debian/lxcfs.links pve-maker/lxcfs/debian/lxcfs.links
+--- pve-src/lxcfs/debian/lxcfs.links    2022-10-09 14:04:13.451224755 +0000
++++ pve-maker/lxcfs/debian/lxcfs.links  2023-01-21 10:44:24.298002076 +0000
+@@ -1 +1 @@
+-usr/lib/x86_64-linux-gnu/lxcfs/liblxcfs.so usr/lib/x86_64-linux-gnu/liblxcfs.so
++usr/lib/aarch64-linux-gnu/lxcfs/liblxcfs.so usr/lib/aarch64-linux-gnu/liblxcfs.so
