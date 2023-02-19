@@ -18,8 +18,8 @@
 ## 3. version
 
 ### pve
-- public version = 7.3-4
-- testing version = 7.3-4
+- public version = 7.3-6
+- testing version = 7.3-6
 
 ### pbs
 - public version = 2.3.1-1
