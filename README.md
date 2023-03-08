@@ -31,7 +31,7 @@ If you are using arm64 server that supports EFI,you can install proxmox-ve with 
 
 https://mirrors.apqa.cn/proxmox-edge/unofficialiso/proxmox-ve-arm64_7.3-1.iso 
 
-If you are using u-boot device, you can install proxmox-ve from repo.
+If you are using u-boot device or failed with iso, you can install proxmox-ve from repo.
 
 Head to the wiki page to learn more.
 
