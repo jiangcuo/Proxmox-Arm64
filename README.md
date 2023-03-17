@@ -35,6 +35,10 @@ If you are using u-boot device or failed with iso, you can install proxmox-ve fr
 
 Head to the wiki page to learn more.
 
+## Passthrough
+Hardware passthrough looks good
+
+![ ](https://raw.githubusercontent.com/jiangcuo/Proxmox-Arm64/main/images/pasthrough.png)
 
 ## More ?
 
