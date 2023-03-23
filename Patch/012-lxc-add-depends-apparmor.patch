@@ -1,0 +1,10 @@
+--- pve-src/lxc/debian/control	2023-01-10 10:41:44.341454947 +0000
++++ pve-maker/lxc/debian/control	2023-03-23 10:26:19.375396792 +0000
+@@ -30,6 +30,7 @@
+          lxcfs,
+          python3,
+          uidmap,
++         apparmor,
+          ${misc:Depends},
+          ${shlibs:Depends},
+ Conflicts: liblxc1,
