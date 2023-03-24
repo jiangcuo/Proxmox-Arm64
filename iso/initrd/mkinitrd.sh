@@ -16,6 +16,8 @@ echo "uncpio $inits"
 cpio -idm <../initrd.img
 echo "copy local init"
 cp $localpath/init  $localpath/initrd/initrd
+cp $isopath/.cd-info ./
+cp $isopath/.pve-cd-id.txt ./
 echo "cpio $inits"
 find . | cpio -o -H newc | gzip > $initpath
 rm  $localpath/initrd/* -rf
