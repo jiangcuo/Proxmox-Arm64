@@ -1,8 +1,10 @@
 #!/bin/sh
-
 # (C) 2009-2021 Proxmox Server Solutions GmbH <support@proxmox.com>
+# Maintainer: jiangcuo@bingsin.com
 
 export PATH=/sbin:/bin:/usr/bin:/usr/sbin
+#create dir for this init
+/bin/mkdir /proc /sys /mnt /tmp -p
 
 if [ -f /.cd-info ]; then
     . /.cd-info
@@ -35,6 +37,8 @@ if [ -d /sys/firmware/efi ]; then
     echo "EFI boot mode detected, mounting efivars filesystem"
     mount -nt efivarfs efivarfs /sys/firmware/efi/efivars
 fi
+
+
 
 # ensure we have a devtmpfs, so that we see the changes from the chroot /dev
 # managed by udev here too, and thus normal path look ups on devices are in
