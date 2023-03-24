@@ -48,6 +48,7 @@ parse_cmdline() {
     root=
     lvm2root=
     proxdebug=0
+    safemode=0
     # shellcheck disable=SC2013
     for par in $(cat /proc/cmdline); do
         case $par in
@@ -62,6 +63,9 @@ parse_cmdline() {
             ;;
             proxdebug)
                 proxdebug=1
+            ;;
+            safemode)
+                safemode=1
             ;;
         esac
     done;
@@ -384,6 +388,11 @@ if [ -f "$INSTALLER_SQFS" ]; then
 
     cp /etc/hostid /mnt/.installer-mp/etc/
     cp /.cd-info /mnt/.installer-mp/ || true
+    
+    if [ $safemode -ne 0 ]; then
+        echo "Enter Graph Safemod"
+        cp  /mnt/.installer-mp/etc/X11/xorg.conf.new /mnt/.installer-mp/etc/X11/xorg.conf
+    fi
 
     if [ -x "/mnt/.installer-mp/sbin/unconfigured.sh" ]; then
         mount -t devtmpfs devtmpfs /mnt/.installer-mp/dev
