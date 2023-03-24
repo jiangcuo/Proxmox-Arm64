@@ -2,19 +2,24 @@
 #isopath=""
 isopath=$1
 localpath=$(dirname $(readlink -f "$0"))
-mkdir $localpath/initrd
-for inits in `ls $isopath/boot/initrd*.img`;
+chmod +x $localpath/init
+mkdir $localpath/initrd -p
+for inits in `find  $isopath/boot/ -maxdepth 1 -name "initrd*.img"  -printf '%f\n'`;
 do
-cp $inits $localpath/initrd/$inits.gz
+initpath="$isopath/boot/$inits"
+cp $initpath $localpath/initrd/initrd.img.gz
 cd $localpath/initrd
-gzip -d $inits.gz
+gzip -d initrd.img.gz
 mkdir $localpath/initrd/initrd
 cd  $localpath/initrd/initrd
 echo "uncpio $inits"
-cpio -idm <../$inits
-echo "copy local"
+cpio -idm <../initrd.img
+echo "copy local init"
 cp $localpath/init  $localpath/initrd/initrd
-find . | cpio -o -H newc | gzip > $isopath/boot/$inits
+echo "cpio $inits"
+find . | cpio -o -H newc | gzip > $initpath
 rm  $localpath/initrd/* -rf
+echo "$inits done"
 done
-rm $localpath/initrd
+rm -rf $localpath/initrd
+echo "all done"
