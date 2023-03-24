@@ -2,7 +2,7 @@
 #isopath
 isopath=$1
 xorriso -as mkisofs -r  -V 'PVE' \
--o ./pvearm.iso \
+-o ../pvearm.iso \
 -R -cache-inodes \
 -e boot/grub/efi.img \
 -no-emul-boot \
