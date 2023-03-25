@@ -1,5 +1,11 @@
 # Proxmox-Arm
 
+## Support 
+mail: jiangcuo@bingsin.com
+issue: https://github.com/jiangcuo/Proxmox-Arm64/issues
+discord: https://discord.gg/ZdbD2gDcnP
+qq群组：750937440
+
 ## 1. Tested platform (arm64):
 - Rockpi
 - Raspberry Pi
