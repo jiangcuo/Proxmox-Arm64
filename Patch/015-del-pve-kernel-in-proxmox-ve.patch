@@ -1,0 +1,22 @@
+diff -ur pve-src/proxmox-ve/debian/control pve-maker/proxmox-ve/debian/control
+--- pve-src/proxmox-ve/debian/control	2022-10-09 14:07:18.847891057 +0000
++++ pve-maker/proxmox-ve/debian/control	2023-03-25 15:31:36.519342741 +0000
+@@ -15,7 +15,6 @@
+          openssh-client,
+          openssh-server,
+          proxmox-archive-keyring,
+-         pve-kernel-5.15,
+          pve-kernel-helper,
+          pve-manager,
+          pve-qemu-kvm,
+@@ -27,10 +26,3 @@
+  virtualization platform for running Virtual Appliances and Virtual
+  Machines. This is a meta package which will install everything
+  needed.
+-
+-Package: pve-headers
+-Architecture: all
+-Depends: pve-headers-5.15
+-Description: Default Proxmox VE Kernel Headers
+- This is a metapackage which will install the kernel headers for the
+- current default kernel.
