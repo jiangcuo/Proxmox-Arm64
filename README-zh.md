@@ -2,21 +2,20 @@
 
 [Englist](README.md) | [中文](README-zh.md)
 
-## Support 
+## 获取有限的支持
 
 mail: jiangcuo@bingsin.com
 
 issue: https://github.com/jiangcuo/Proxmox-Arm64/issues
 
-discord: https://discord.gg/ZdbD2gDcnP
+qq群组：750937440
 
-
-## 1. Tested platform (arm64):
+## 1. 测试的平台 (arm64):
 - Rockpi
 - Raspberry Pi
 - Amlogic TV box
 - Kunpeng
-- FT
+- FT 由于该产品的系列有点多，最好先安装debian再安装proxmox ve
 - Ampere 
 
 ## 2. features
@@ -33,24 +32,26 @@ discord: https://discord.gg/ZdbD2gDcnP
 - testing version = 7.4-2
 
 ### pbs
-- public version = 2.3.1-1
-- testing version = 2.3.1-1
+- public version = 2.4.1-1
+- testing version = 2.4.1-1
 
 ## 4. Installtion
 
-If you are using arm64 server that supports EFI,you can install proxmox-ve with iso.
+如果使用带efi的设备，可以使用ISO安装
 
 https://mirrors.apqa.cn/proxmox/isos/
 
-If you are using u-boot device or failed with iso, you can install proxmox-ve from repo.
+如果使用u-boot启动的设备，请先安装好debian或者armbian再安装proxmox ve
 
-Head to the wiki page to learn more.
+这部分请参考wifi
 
-## Passthrough
-Hardware passthrough looks good
+## 直通
+目前已经过测试，可以直通io卡，显卡有问题。
 
 ![ ](https://raw.githubusercontent.com/jiangcuo/Proxmox-Arm64/main/images/pasthrough.png)
 
-## More ?
+## 了解更多 ?
+
+请参考wiki页面
 
 https://github.com/jiangcuo/Proxmox-Arm64/wiki
