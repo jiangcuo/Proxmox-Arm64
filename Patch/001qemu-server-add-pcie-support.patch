@@ -22,32 +22,6 @@ diff -uNr -x .git a/qemu-server/PVE/QemuServer/PCI.pm b/qemu-server/PVE/QemuServ
  	hostpci2 => { bus => 0, addr => 27 },
  	hostpci3 => { bus => 0, addr => 28 },
  	#addr29 : usb-host (pve-usb.cfg)
-diff -uNr -x .git a/qemu-server/PVE/QemuServer.pm b/qemu-server/PVE/QemuServer.pm
---- a/qemu-server/PVE/QemuServer.pm	2022-09-16 06:25:27.919683004 -0400
-+++ b/qemu-server/PVE/QemuServer.pm	2022-09-16 06:52:27.294886400 -0400
-@@ -86,6 +86,22 @@
- 	],
-     },
-     aarch64 => {
-+    '4m-no-smm' => [
-+           "$EDK2_FW_BASE/AAVMF_CODE.fd",
-+           "$EDK2_FW_BASE/AAVMF_VARS.fd",
-+       ],
-+       '4m-no-smm-ms' => [
-+           "$EDK2_FW_BASE/AAVMF_CODE.fd",
-+           "$EDK2_FW_BASE/AAVMF_VARS.fd",
-+       ],
-+       '4m' => [
-+           "$EDK2_FW_BASE/AAVMF_CODE.fd",
-+           "$EDK2_FW_BASE/AAVMF_VARS.fd",
-+       ],
-+       '4m-ms' => [
-+           "$EDK2_FW_BASE/AAVMF_CODE.fd",
-+           "$EDK2_FW_BASE/AAVMF_VARS.fd",
-+       ],
- 	default => [
- 	    "$EDK2_FW_BASE/AAVMF_CODE.fd",
- 	    "$EDK2_FW_BASE/AAVMF_VARS.fd",
 @@ -587,7 +603,7 @@
  	optional => 1,
  	type => 'string', format => 'pve-qm-ide',
