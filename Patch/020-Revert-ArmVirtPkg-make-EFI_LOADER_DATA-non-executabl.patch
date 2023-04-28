@@ -1,0 +1,57 @@
+diff --git pve-src/pve-edk2-firmware/debian/patches/Revert-ArmVirtPkg-make-EFI_LOADER_DATA-non-executabl.patch pve-maker/pve-edk2-firmware/debian/patches/Revert-ArmVirtPkg-make-EFI_LOADER_DATA-non-executabl.patch
+new file mode 100644
+index 0000000..7e1417a
+--- /dev/null
++++ pve-maker/pve-edk2-firmware/debian/patches/Revert-ArmVirtPkg-make-EFI_LOADER_DATA-non-executabl.patch
+@@ -0,0 +1,20 @@
++Description: Revert "ArmVirtPkg: make EFI_LOADER_DATA non-executable"
++ The versions of GRUB most distros are shipping still depend on executable
++ EFI_LOADER_DATA. Revert this upstream change until the necessary fixes are
++ more generally available.
++Author: dann frazier <dannf@debian.org>
++Bug-Debian: https://bugs.debian.org/1025656
++Forwarded: https://edk2.groups.io/g/devel/message/97814
++Last-Update: 2023-03-09
++
++--- a/ArmVirtPkg/ArmVirt.dsc.inc
+++++ b/ArmVirtPkg/ArmVirt.dsc.inc
++@@ -361,7 +361,7 @@
++   # reserved ones, with the exception of LoaderData regions, of which OS loaders
++   # (i.e., GRUB) may assume that its contents are executable.
++   #
++-  gEfiMdeModulePkgTokenSpaceGuid.PcdDxeNxMemoryProtectionPolicy|0xC000000000007FD5
+++  gEfiMdeModulePkgTokenSpaceGuid.PcdDxeNxMemoryProtectionPolicy|0xC000000000007FD1
++ 
++ [Components.common]
++   #
+diff --git pve-src/pve-edk2-firmware/debian/patches/series pve-maker/pve-edk2-firmware/debian/patches/series
+index ade8665..209e2de 100644
+--- pve-src/pve-edk2-firmware/debian/patches/series
++++ pve-maker/pve-edk2-firmware/debian/patches/series
+@@ -1,3 +1,4 @@
+ no-stack-protector-all-archs.diff
+ brotlicompress-disable.diff
+-x64-baseline-abi.patch
++#x64-baseline-abi.patch
++Revert-ArmVirtPkg-make-EFI_LOADER_DATA-non-executabl.patch
+diff --git pve-src/pve-edk2-firmware/debian/pve-edk2-firmware.links pve-maker/pve-edk2-firmware/debian/pve-edk2-firmware.links
+new file mode 100644
+index 0000000..ad6fded
+--- /dev/null
++++ pve-maker/pve-edk2-firmware/debian/pve-edk2-firmware.links
+@@ -0,0 +1,2 @@
++/usr/share/pve-edk2-firmware/AAVMF_CODE.fd    /usr/share/pve-edk2-firmware/AAVMF_CODE.ms.fd
++/usr/share/pve-edk2-firmware/AAVMF_CODE.fd    /usr/share/pve-edk2-firmware/AAVMF_CODE.snakeoil.fd
+diff --git pve-src/pve-edk2-firmware/debian/rules pve-maker/pve-edk2-firmware/debian/rules
+index 43fa34e..0319117 100755
+--- pve-src/pve-edk2-firmware/debian/rules
++++ pve-maker/pve-edk2-firmware/debian/rules
+@@ -52,7 +52,7 @@ undefine EDK_TOOLS_PATH
+ undefine CONF_PATH
+ 
+ %:
+-       dh $@
++       dh $@ --with quilt
+ 
+ override_dh_auto_build: build-qemu-efi-aarch64 build-ovmf build-ovmf32
+ 
