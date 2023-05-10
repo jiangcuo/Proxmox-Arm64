@@ -1,6 +1,6 @@
 # Proxmox-Arm
 
-[Englist](README.md) | [中文](README-zh.md)
+[English](README.md) | [中文](README-zh.md)
 
 ## Support 
 
@@ -36,7 +36,11 @@ discord: https://discord.gg/ZdbD2gDcnP
 - public version = 2.3.1-1
 - testing version = 2.3.1-1
 
-## 4. Installtion
+## 4. Changelog
+
+[Changelog](changlog.md)
+
+## 5. Installtion
 
 If you are using arm64 server that supports EFI,you can install proxmox-ve with iso.
 
@@ -46,11 +50,11 @@ If you are using u-boot device or failed with iso, you can install proxmox-ve fr
 
 Head to the wiki page to learn more.
 
-## Passthrough
+## 6. Passthrough
 Hardware passthrough looks good
 
 ![ ](https://raw.githubusercontent.com/jiangcuo/Proxmox-Arm64/main/images/pasthrough.png)
 
-## More ?
+## 7. More ?
 
 https://github.com/jiangcuo/Proxmox-Arm64/wiki
