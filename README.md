@@ -30,7 +30,7 @@ discord: https://discord.gg/ZdbD2gDcnP
 
 ### pve
 - public version = 7.4-2
-- testing version = 7.4-2
+- testing version = 8.0-8
 
 ### pbs
 - public version = 2.3.1-1
