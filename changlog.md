@@ -1,1 +1,2 @@
-#  Waiting for upstream update to 8
+#  20230613
+upgrade to proxmox ve 8 beta8

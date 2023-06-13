@@ -1,6 +1,6 @@
-diff -ur pve-src/qemu-server/PVE/QemuServer/USB.pm pve-maker/qemu-server/PVE/QemuServer/USB.pm
---- pve-src/qemu-server/PVE/QemuServer/USB.pm	2023-03-27 20:59:23.301335699 +0800
-+++ pve-maker/qemu-server/PVE/QemuServer/USB.pm	2023-03-27 21:03:15.099271194 +0800
+diff -x .git -ur a/PVE/QemuServer/USB.pm b/PVE/QemuServer/USB.pm
+--- a/PVE/QemuServer/USB.pm	2023-06-06 13:30:40.391616859 +0000
++++ b/PVE/QemuServer/USB.pm	2023-06-06 13:28:43.439549799 +0000
 @@ -59,8 +59,8 @@
      my $is_q35 = PVE::QemuServer::Machine::machine_type_is_q35($conf);
  
@@ -12,24 +12,24 @@ diff -ur pve-src/qemu-server/PVE/QemuServer/USB.pm pve-maker/qemu-server/PVE/Qem
      } elsif (!$is_q35) {
          $pciaddr = print_pci_addr("piix3", $bridges, $arch, $machine);
          push @$devices, '-device', "piix3-usb-uhci,id=uhci$pciaddr.0x2";
-diff -ur pve-src/qemu-server/PVE/QemuServer.pm pve-maker/qemu-server/PVE/QemuServer.pm
---- pve-src/qemu-server/PVE/QemuServer.pm	2023-03-27 20:59:23.297335666 +0800
-+++ pve-maker/qemu-server/PVE/QemuServer.pm	2023-03-27 21:02:17.178787507 +0800
-@@ -1489,7 +1489,7 @@
+diff -x .git -ur a/PVE/QemuServer.pm b/PVE/QemuServer.pm
+--- a/PVE/QemuServer.pm	2023-06-06 12:57:18.378594124 +0000
++++ b/PVE/QemuServer.pm	2023-06-06 13:29:58.967574871 +0000
+@@ -1473,7 +1473,7 @@
      # we use uhci for old VMs because tablet driver was buggy in older qemu
      my $usbbus;
      if ($q35 || $arch eq 'aarch64') {
 -	$usbbus = 'ehci';
-+	$usbbus = 'qemu-xchi';
++	$usbbus = 'qemu-xhci';
      } else {
  	$usbbus = 'uhci';
      }
-@@ -1502,7 +1502,7 @@
+@@ -1486,7 +1486,7 @@
  
      return if $arch ne 'aarch64';
  
 -    return "usb-kbd,id=keyboard,bus=ehci.0,port=2";
-+    return "usb-kbd,id=keyboard,bus=qemu-xchi.0,port=2";
++    return "usb-kbd,id=keyboard,bus=qemu-xhci.0,port=2";
  }
  
  my sub get_drive_id {

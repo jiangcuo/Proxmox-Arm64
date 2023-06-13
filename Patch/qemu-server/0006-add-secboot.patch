@@ -1,0 +1,36 @@
+diff -x .git -ur a/PVE/QemuServer.pm b/PVE/QemuServer.pm
+--- a/PVE/QemuServer.pm	2023-06-06 13:53:11.469993571 +0000
++++ b/PVE/QemuServer.pm	2023-06-06 13:52:29.537733197 +0000
+@@ -89,6 +89,22 @@
+ 	],
+     },
+     aarch64 => {
++    '4m-no-smm' => [
++        "$EDK2_FW_BASE/AAVMF_CODE.fd",
++        "$EDK2_FW_BASE/AAVMF_VARS.fd",
++    ],
++    '4m-no-smm-ms' => [
++        "$EDK2_FW_BASE/AAVMF_CODE.ms.fd",
++        "$EDK2_FW_BASE/AAVMF_VARS.ms.fd",
++    ],
++   '4m' => [
++        "$EDK2_FW_BASE/AAVMF_CODE.fd",
++        "$EDK2_FW_BASE/AAVMF_VARS.fd",
++    ],
++    '4m-ms' => [
++        "$EDK2_FW_BASE/AAVMF_CODE.ms.fd",
++        "$EDK2_FW_BASE/AAVMF_VARS.ms.fd",
++    ],
+ 	default => [
+ 	    "$EDK2_FW_BASE/AAVMF_CODE.fd",
+ 	    "$EDK2_FW_BASE/AAVMF_VARS.fd",
+@@ -3398,7 +3414,7 @@
+ 	or die "no OVMF images known for architecture '$arch'\n";
+ 
+     my $type = 'default';
+-    if ($arch ne "aarch64" && defined($efidisk->{efitype}) && $efidisk->{efitype} eq '4m') {
++    if (defined($efidisk->{efitype}) && $efidisk->{efitype} eq '4m') {
+ 	$type = $smm ? "4m" : "4m-no-smm";
+ 	$type .= '-ms' if $efidisk->{'pre-enrolled-keys'};
+     }
+Only in qemu-server2/qemu-server/: ramfb.support

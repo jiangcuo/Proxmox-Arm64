@@ -1,0 +1,6 @@
+diff -ur a/debian/lxcfs.links b/debian/lxcfs.links
+--- a/debian/lxcfs.links    2023-06-03 12:11:56.478211935 +0000
++++ b/debian/lxcfs.links   2023-06-03 12:14:39.007960046 +0000
+@@ -1 +1 @@
+-usr/lib/x86_64-linux-gnu/lxcfs/liblxcfs.so usr/lib/x86_64-linux-gnu/liblxcfs.so
++usr/lib/aarch64-linux-gnu/lxcfs/liblxcfs.so usr/lib/aarch64-linux-gnu/liblxcfs.so

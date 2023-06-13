@@ -1,0 +1,12 @@
+diff -x .git -ur a/PVE/QemuServer/CPUConfig.pm b/PVE/QemuServer/CPUConfig.pm
+--- a/PVE/QemuServer/CPUConfig.pm	2023-06-06 13:22:56.188610475 +0000
++++ b/PVE/QemuServer/CPUConfig.pm	2023-06-06 13:16:46.274504157 +0000
+@@ -463,7 +463,7 @@
+ 
+     my $cputype = $kvm ? "kvm64" : "qemu64";
+     if ($arch eq 'aarch64') {
+-	$cputype = 'cortex-a57';
++	$cputype = 'host';
+     }
+ 
+     my $cpu = {};

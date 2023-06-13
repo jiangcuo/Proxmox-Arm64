@@ -1,6 +1,6 @@
-diff -ur -x .git a/pve-lxc-syscalld/src/macros.rs b/pve-lxc-syscalld/src/macros.rs
---- a/pve-lxc-syscalld/src/macros.rs     2022-09-11 12:51:22.984264183 +0000
-+++ b/pve-lxc-syscalld/src/macros.rs     2022-09-11 12:52:58.512311468 +0000
+diff -ur -x .git a/src/macros.rs b/src/macros.rs
+--- a/src/macros.rs     2022-09-11 12:51:22.984264183 +0000
++++ b/src/macros.rs     2022-09-11 12:52:58.512311468 +0000
 @@ -1,7 +1,6 @@
  // c_str!() from the byte-strings crate is implemented via a proc macro which seems a bit excessive
  macro_rules! c_str {
@@ -9,9 +9,9 @@ diff -ur -x .git a/pve-lxc-syscalld/src/macros.rs b/pve-lxc-syscalld/src/macros.
          let bytes = concat!($data, "\0");
          unsafe { std::ffi::CStr::from_bytes_with_nul_unchecked(bytes.as_bytes()) }
      }};
-diff -ur -x .git a/pve-lxc-syscalld/src/sys_quotactl.rs b/pve-lxc-syscalld/src/sys_quotactl.rs
---- a/pve-lxc-syscalld/src/sys_quotactl.rs       2022-09-11 12:51:22.984264183 +0000
-+++ b/pve-lxc-syscalld/src/sys_quotactl.rs       2022-09-11 12:52:34.832293930 +0000
+diff -ur -x .git a/src/sys_quotactl.rs b/src/sys_quotactl.rs
+--- a/src/sys_quotactl.rs       2022-09-11 12:51:22.984264183 +0000
++++ b/src/sys_quotactl.rs       2022-09-11 12:52:34.832293930 +0000
 @@ -113,7 +113,7 @@
          let mut data: dqinfo = unsafe { mem::zeroed() };
          let special = special.as_ref().map(|c| c.as_ptr()).unwrap_or(ptr::null());

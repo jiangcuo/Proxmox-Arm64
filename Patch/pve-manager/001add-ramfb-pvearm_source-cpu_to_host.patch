@@ -1,0 +1,86 @@
+diff -Nur -x .git pve-manager/Makefile pve-manager2/Makefile
+--- pve-manager/Makefile	2023-06-07 08:33:43.742420344 +0000
++++ pve-manager2/Makefile	2023-06-07 08:02:16.668323297 +0000
+@@ -20,11 +20,6 @@
+ all: $(SUBDIRS)
+ 	set -e && for i in $(SUBDIRS); do $(MAKE) -C $$i; done
+ 
+-.PHONY: check
+-check: bin test www
+-	$(MAKE) -C bin check
+-	$(MAKE) -C test check
+-	$(MAKE) -C www check
+ 
+ .PHONY: dinstall
+ dinstall: $(DEB)
+diff -Nur -x .git pve-manager/configs/Makefile pve-manager2/configs/Makefile
+--- pve-manager/configs/Makefile	2023-06-07 08:34:02.234582283 +0000
++++ pve-manager2/configs/Makefile	2023-06-07 07:53:43.397027481 +0000
+@@ -8,7 +8,7 @@
+ .PHONY: install
+ install: country.dat vzdump.conf pve-sources.list pve-initramfs.conf pve-blacklist.conf pve.logrotate
+ 	install -D -m 0644 pve.logrotate $(DESTDIR)/etc/logrotate.d/pve
+-	install -D -m 0644 pve-sources.list $(DESTDIR)/etc/apt/sources.list.d/pve-enterprise.list
++	install -D -m 0644 pve-sources.list ${DESTDIR}/etc/apt/sources.list.d/pve-arm64.list
+ 	install -D -m 0644 pve-blacklist.conf $(DESTDIR)/etc/modprobe.d/pve-blacklist.conf
+ 	install -D -m 0644 vzdump.conf $(DESTDIR)/etc/vzdump.conf
+ 	install -D -m 0644 pve-initramfs.conf $(DESTDIR)/etc/initramfs-tools/conf.d/pve-initramfs.conf
+diff -Nur -x .git pve-manager/configs/pve-sources.list pve-manager2/configs/pve-sources.list
+--- pve-manager/configs/pve-sources.list	2023-06-07 08:33:47.342451474 +0000
++++ pve-manager2/configs/pve-sources.list	2023-06-07 08:05:32.825598625 +0000
+@@ -1 +1 @@
+-deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
++deb https://mirrors.apqa.cn/proxmox/ pvearm8 main
+diff -Nur -x .git pve-manager/debian/control pve-manager2/debian/control
+--- pve-manager/debian/control	2023-06-13 02:18:38.932442362 +0000
++++ pve-manager2/debian/control	2023-06-13 02:19:31.512440466 +0000
+@@ -41,7 +41,6 @@
+          fonts-font-awesome,
+          gdisk,
+          hdparm,
+-         ifupdown2 (>= 2.0.1-1+pve8) | ifenslave (>= 2.6),
+          libapt-pkg-perl,
+          libcrypt-ssleay-perl,
+          libfile-readbackwards-perl,
+@@ -96,7 +95,7 @@
+          ${perl:Depends},
+          ${shlibs:Depends}
+ Recommends: proxmox-offline-mirror-helper
+-Suggests: libpve-network-perl (>= 0.5-1)
++Suggests: libpve-network-perl (>= 0.5-1),pve-firmware
+ Conflicts: vlan,
+            vzdump,
+ Replaces: vlan,
+diff -Nur -x .git pve-manager/debian/lintian-overrides pve-manager2/debian/lintian-overrides
+--- pve-manager/debian/lintian-overrides	2023-06-07 08:34:13.286681179 +0000
++++ pve-manager2/debian/lintian-overrides	2023-06-07 07:54:51.009456553 +0000
+@@ -3,5 +3,5 @@
+ pve-manager: no-manual-page [usr/bin/pveupdate]
+ pve-manager: non-standard-dir-perm 0700 != 0755 [var/log/pveproxy/]
+ pve-manager: systemd-service-file-refers-to-unusual-wantedby-target getty.target [lib/systemd/system/pvebanner.service]
+-pve-manager: package-installs-apt-sources [etc/apt/sources.list.d/pve-enterprise.list]
++pve-manager: package-installs-apt-sources [etc/apt/sources.list.d/pve-arm64.list]
+ pve-manager: privacy-breach-generic usr/share/pve-manager/touch/sencha-touch-all-debug.js *
+diff -Nur -x .git pve-manager/www/manager6/Utils.js pve-manager2/www/manager6/Utils.js
+--- pve-manager/www/manager6/Utils.js	2023-06-13 02:18:38.940442362 +0000
++++ pve-manager2/www/manager6/Utils.js	2023-06-07 08:01:59.240210281 +0000
+@@ -606,6 +606,7 @@
+ 	serial3: gettext('Serial terminal') + ' 3',
+ 	virtio: 'VirtIO-GPU',
+ 	'virtio-gl': 'VirGL GPU',
++	ramfb: 'ramfb',
+ 	none: Proxmox.Utils.noneText,
+     },
+ 
+diff -Nur -x .git pve-manager/www/manager6/form/CPUModelSelector.js pve-manager2/www/manager6/form/CPUModelSelector.js
+--- pve-manager/www/manager6/form/CPUModelSelector.js	2023-06-07 08:33:51.926491404 +0000
++++ pve-manager2/www/manager6/form/CPUModelSelector.js	2023-06-07 08:03:02.028617693 +0000
+@@ -15,7 +15,7 @@
+     valueField: 'name',
+     displayField: 'displayname',
+ 
+-    emptyText: Proxmox.Utils.defaultText + ' (kvm64)',
++    emptyText: Proxmox.Utils.defaultText + ' (host)',
+     allowBlank: true,
+ 
+     editable: true,
