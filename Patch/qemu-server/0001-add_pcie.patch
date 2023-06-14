@@ -140,17 +140,18 @@ diff -uNr -x .git a/PVE/QemuServer/PCI.pm b/PVE/QemuServer/PCI.pm
  	'virtioscsi0' => { bus => 3, addr => 1 },
  	'virtioscsi1' => { bus => 3, addr => 2 },
  	'virtioscsi2' => { bus => 3, addr => 3 },
-@@ -514,6 +504,11 @@
- 	    if $info->{has_fl_reset} && !PVE::SysFSTools::pci_dev_reset($info);
-     }
- 
-+# add aarch64 pcie     
-+    if ($arch eq 'aarch64') { 
-+           push @$devices, '-readconfig', '/usr/share/qemu-server/pve-aarch64.cfg';
+@@ -399,7 +389,9 @@
+     my $kvm_off = 0;
+     my $gpu_passthrough = 0;
+     my $legacy_igd = 0;
+-
++	if ($arch eq 'aarch64') { 
++        push @$devices, '-readconfig', '/usr/share/qemu-server/pve-aarch64.cfg';
 +    }
-+
-     return $info;
- }
+     my $pciaddr;
+     for (my $i = 0; $i < $MAX_HOSTPCI_DEVICES; $i++)  {
+ 	my $id = "hostpci$i";
+
  
 diff -uNr -x .git a/qemu-configs/Makefile b/qemu-configs/Makefile
 --- a/qemu-configs/Makefile	2023-06-06 13:03:01.500126696 +0000
