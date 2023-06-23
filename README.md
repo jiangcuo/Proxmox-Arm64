@@ -29,8 +29,8 @@ discord: https://discord.gg/ZdbD2gDcnP
 ## 3. version
 
 ### pve
-- public version = 7.4-2
-- testing version = 8.0-8
+- public version = 8.0.3
+- testing version = 8.0.3
 
 ### pbs
 - public version = 2.3.1-1
