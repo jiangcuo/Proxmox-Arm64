@@ -1,0 +1,17 @@
+diff -uNr a/PVE/QemuServer.pm b/PVE/QemuServer.pm
+--- a/PVE/QemuServer.pm 2023-06-24 00:08:52.414002113 +0800
++++ b/PVE/QemuServer.pm 2023-06-24 00:25:26.572220096 +0800
+@@ -4158,8 +4183,11 @@
+        $machine_type_min =~ s/\+pve\d+$//;
+        $machine_type_min .= "+pve$required_pve_version";
+     }
+-    push @$machineFlags, "type=${machine_type_min}";
+-
++    if ($arch eq 'aarch64'){
++        push @$machineFlags, "type=${machine_type_min},gic-version=host";
++    }else{
++       push @$machineFlags, "type=${machine_type_min}";
++    }
+     push @$cmd, @$devices;
+     push @$cmd, '-rtc', join(',', @$rtcFlags) if scalar(@$rtcFlags);
+     push @$cmd, '-machine', join(',', @$machineFlags) if scalar(@$machineFlags);
