@@ -8,7 +8,7 @@ diff -x .git -ur a/PVE/QemuServer/USB.pm b/PVE/QemuServer/USB.pm
 -        $pciaddr = print_pci_addr('ehci', $bridges, $arch, $machine);
 -        push @$devices, '-device', "usb-ehci,id=ehci$pciaddr";
 +        $pciaddr = print_pci_addr('qemu-xhci', $bridges, $arch, $machine);
-+        push @$devices, '-device', "qemu-xhci,id=qemu-xchi";
++        push @$devices, '-device', "qemu-xhci,id=qemu-xhci";
      } elsif (!$is_q35) {
          $pciaddr = print_pci_addr("piix3", $bridges, $arch, $machine);
          push @$devices, '-device', "piix3-usb-uhci,id=uhci$pciaddr.0x2";
