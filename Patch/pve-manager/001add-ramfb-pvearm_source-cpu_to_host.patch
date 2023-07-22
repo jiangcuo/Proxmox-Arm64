@@ -30,7 +30,7 @@ diff -Nur -x .git pve-manager/configs/pve-sources.list pve-manager2/configs/pve-
 +++ pve-manager2/configs/pve-sources.list	2023-06-07 08:05:32.825598625 +0000
 @@ -1 +1 @@
 -deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
-+deb https://mirrors.apqa.cn/proxmox/ pvearm8 main
++deb https://mirrors.apqa.cn/proxmox/debian/proxmox/pve bookworm port
 diff -Nur -x .git pve-manager/debian/control pve-manager2/debian/control
 --- pve-manager/debian/control	2023-06-13 02:18:38.932442362 +0000
 +++ pve-manager2/debian/control	2023-06-13 02:19:31.512440466 +0000
