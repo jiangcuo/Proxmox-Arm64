@@ -21,7 +21,7 @@ diff -Nur -x .git pve-manager/configs/Makefile pve-manager2/configs/Makefile
  install: country.dat vzdump.conf pve-sources.list pve-initramfs.conf pve-blacklist.conf pve.logrotate
  	install -D -m 0644 pve.logrotate $(DESTDIR)/etc/logrotate.d/pve
 -	install -D -m 0644 pve-sources.list $(DESTDIR)/etc/apt/sources.list.d/pve-enterprise.list
-+	install -D -m 0644 pve-sources.list ${DESTDIR}/etc/apt/sources.list.d/pve-arm64.list
++	install -D -m 0644 pve-sources.list ${DESTDIR}/etc/apt/sources.list.d/pveport.list
  	install -D -m 0644 pve-blacklist.conf $(DESTDIR)/etc/modprobe.d/pve-blacklist.conf
  	install -D -m 0644 vzdump.conf $(DESTDIR)/etc/vzdump.conf
  	install -D -m 0644 pve-initramfs.conf $(DESTDIR)/etc/initramfs-tools/conf.d/pve-initramfs.conf
@@ -59,7 +59,7 @@ diff -Nur -x .git pve-manager/debian/lintian-overrides pve-manager2/debian/linti
  pve-manager: non-standard-dir-perm 0700 != 0755 [var/log/pveproxy/]
  pve-manager: systemd-service-file-refers-to-unusual-wantedby-target getty.target [lib/systemd/system/pvebanner.service]
 -pve-manager: package-installs-apt-sources [etc/apt/sources.list.d/pve-enterprise.list]
-+pve-manager: package-installs-apt-sources [etc/apt/sources.list.d/pve-arm64.list]
++pve-manager: package-installs-apt-sources [etc/apt/sources.list.d/pveport.list]
  pve-manager: privacy-breach-generic usr/share/pve-manager/touch/sencha-touch-all-debug.js *
 diff -Nur -x .git pve-manager/www/manager6/Utils.js pve-manager2/www/manager6/Utils.js
 --- pve-manager/www/manager6/Utils.js	2023-06-13 02:18:38.940442362 +0000
