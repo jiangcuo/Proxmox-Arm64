@@ -38,7 +38,7 @@ diff -Nur -x .git pve-manager/debian/control pve-manager2/debian/control
           fonts-font-awesome,
           gdisk,
           hdparm,
--         ifupdown2 (>= 2.0.1-1+pve8) | ifenslave (>= 2.6),
+-         ifupdown2 (>= 3.0) | ifenslave (>= 2.6),
           libapt-pkg-perl,
           libcrypt-ssleay-perl,
           libfile-readbackwards-perl,
