@@ -1,0 +1,5 @@
+RELEASE='8.0'
+ISORELEASE='1'
+ISONAME='proxmox-ve'
+PRODUCT='pve'
+PRODUCTLONG='Proxmox VE'
