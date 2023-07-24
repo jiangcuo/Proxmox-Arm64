@@ -1,0 +1,132 @@
+diff -ur -x .git pve-installer2/proxinstall pve-installer/proxinstall
+--- pve-installer2/proxinstall	2023-07-24 08:11:57.840283231 +0000
++++ pve-installer/proxinstall	2023-07-22 02:58:41.581487417 +0000
+@@ -1583,12 +1583,12 @@
+ 	    "See 'System Requirements' in the $iso_env->{cfg}->{fullname} documentation.");
+     }
+ 
+-    if ($iso_env->{product} eq 'pve' && !$run_env->{hvm_supported}) {
+-	Proxmox::UI::error(
+-	    "No support for hardware-accelerated KVM virtualization detected.\n\n"
+-	    ."Check BIOS settings for Intel VT / AMD-V / SVM."
+-	);
+-    }
++#    if ($iso_env->{product} eq 'pve' && !$run_env->{hvm_supported}) {
++#	Proxmox::UI::error(
++#	    "No support for hardware-accelerated KVM virtualization detected.\n\n"
++#	    ."Check BIOS settings for Intel VT / AMD-V / SVM."
++#	);
++#   }
+ 
+     Proxmox::UI::display_html('license.htm', sub {
+ 	my ($raw_html, $iso_env) = @_;
+diff -ur -x .git pve-installer2/Proxmox/Install.pm pve-installer/Proxmox/Install.pm
+--- pve-installer2/Proxmox/Install.pm	2023-07-24 08:11:57.796282527 +0000
++++ pve-installer/Proxmox/Install.pm	2023-07-24 07:58:04.310873925 +0000
+@@ -6,6 +6,7 @@
+ use Cwd 'abs_path';
+ use Encode;
+ use POSIX ":sys_wait_h";
++use POSIX qw(EINTR EEXIST EOPNOTSUPP);
+ 
+ use Proxmox::Install::ISOEnv;
+ use Proxmox::Install::RunEnv;
+@@ -57,6 +58,13 @@
+     $last_display_change = 0;
+ }
+ 
++my $host_arch;
++sub get_host_arch {
++    $host_arch = (POSIX::uname())[4] if !$host_arch;
++    return $host_arch;
++}
++my $arch = get_host_arch();
++
+ sub display_info {
+     my $min_display_time = 15;
+ 
+@@ -96,6 +104,7 @@
+     },
+ };
+ 
++
+ sub create_filesystem {
+     my ($dev, $name, $type, $start, $end, $fs, $fe) = @_;
+ 
+@@ -558,9 +567,18 @@
+ 
+     syscmd("mount -n $espdev -t vfat $targetdir/boot/efi") == 0 ||
+ 	die "unable to mount $espdev\n";
+-
++    my $arch = get_host_arch();
++    my $rc;
+     eval {
+-	my $rc = syscmd("chroot $targetdir /usr/sbin/grub-install --target x86_64-efi --no-floppy --bootloader-id='proxmox' $dev");
++	if ($arch eq "aarch64"){
++		my $rc = syscmd("chroot $targetdir /usr/sbin/grub-install --target arm64-efi --no-floppy --bootloader-id='proxmox' $dev");
++	} elsif ($arch eq "loongarch64"){
++		my $rc = syscmd("chroot $targetdir /usr/sbin/grub-install --target loongarch64-efi --no-floppy --bootloader-id='proxmox' $dev");
++	} elsif ($arch eq "riscv64"){
++		my $rc = syscmd("chroot $targetdir /usr/sbin/grub-install --target riscv64-efi --no-floppy --bootloader-id='proxmox' $dev");
++	} else {
++		die "unable to install grub on arch $arch\n";
++	}
+ 	if ($rc != 0) {
+ 	    my $run_env = Proxmox::Install::RunEnv::get();
+ 	    if ($run_env->{boot_type} eq 'efi') {
+@@ -571,8 +589,19 @@
+ 	}
+ 	# also install fallback boot file (OVMF does not boot without)
+ 	mkdir("$targetdir/boot/efi/EFI/BOOT");
+-	syscmd("cp $targetdir/boot/efi/EFI/proxmox/grubx64.efi $targetdir/boot/efi/EFI/BOOT/BOOTx64.EFI") == 0 ||
++	syscmd("cp -r $targetdir/boot/efi/EFI/proxmox/* $targetdir/boot/efi/EFI/boot/");
++	if ($arch eq "aarch64"){
++		syscmd("cp $targetdir/boot/efi/EFI/boot/grubaa64.efi $targetdir/boot/efi/EFI/boot/bootaa64.efi ") == 0  ||
+ 	    die "unable to copy efi boot loader\n";
++	} elsif ($arch eq "loongarch64") { 
++		syscmd("cp $targetdir/boot/efi/EFI/boot/grubloongarch64.efi $targetdir/boot/efi/EFI/boot/bootloongarch64.efi") == 0  ||
++            die "unable to copy efi boot loader\n";
++	} elsif ($arch eq "riscv64") {
++		syscmd("cp $targetdir/boot/efi/EFI/boot/grubriscv64.efi $targetdir/boot/efi/EFI/boot/bootriscv64.efi") == 0  ||
++            die "unable to copy efi boot loader\n";
++	}  else {
++                die "unable to opy efi boot loader on arch $arch\n";
++        }
+     };
+     my $err = $@;
+ 
+@@ -1142,14 +1171,6 @@
+ 	diversion_remove($targetdir, "/usr/sbin/update-grub");
+ 	diversion_remove($targetdir, "/usr/sbin/update-initramfs");
+ 
+-	my $kapi;
+-	foreach my $fn (<$targetdir/lib/modules/*>) {
+-	    if ($fn =~ m!/(\d+\.\d+\.\d+-\d+-pve)$!) {
+-		die "found multiple kernels\n" if defined($kapi);
+-		$kapi = $1;
+-	    }
+-	}
+-	die "unable to detect kernel version\n" if !defined($kapi);
+ 
+ 	if (!is_test_mode()) {
+ 
+@@ -1159,7 +1180,7 @@
+ 
+ 	    my $bootloader_err_list = [];
+ 	    eval {
+-		syscmd("chroot $targetdir /usr/sbin/update-initramfs -c -k $kapi") == 0 ||
++		syscmd("chroot $targetdir /usr/sbin/update-initramfs -c -k all") == 0 ||
+ 		    die "unable to install initramfs\n";
+ 
+ 		my $native_4k_disk_bootable = 0;
+@@ -1174,8 +1195,8 @@
+ 		    } else {
+ 			if (!$native_4k_disk_bootable) {
+ 			    eval {
+-				syscmd("chroot $targetdir /usr/sbin/grub-install --target i386-pc --no-floppy --bootloader-id='proxmox' $dev") == 0 ||
+-					die "unable to install the i386-pc boot loader on '$dev'\n";
++#				syscmd("chroot $targetdir /usr/sbin/grub-install --target i386-pc --no-floppy --bootloader-id='proxmox' $dev") == 0 ||
++					print ("not need  install the i386-pc boot loader on '$dev'\n");
+ 			    };
+ 			    push @$bootloader_err_list, $@ if $@;
+ 			}
