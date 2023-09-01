@@ -1,55 +1,78 @@
-diff -ur -x .git a/proxmox-backup/debian/lintian-overrides b/proxmox-backup/debian/lintian-overrides
---- a/proxmox-backup/debian/lintian-overrides  2022-09-11 13:16:49.848555191 +0000
-+++ b/proxmox-backup/debian/lintian-overrides  2022-09-11 13:17:00.556596471 +0000
+diff -Nru10 -x .git a/proxmox-backup/debian/lintian-overrides b/proxmox-backup/debian/lintian-overrides
+--- a/proxmox-backup/debian/lintian-overrides	2023-09-01 21:14:05.613770182 +0800
++++ b/proxmox-backup/debian/lintian-overrides	2023-09-01 21:12:47.353815728 +0800
 @@ -1,7 +1,7 @@
  proxmox-backup-server: mail-transport-agent-dependency-does-not-specify-default-mta
- proxmox-backup-server: package-installs-apt-sources etc/apt/sources.list.d/pbs-enterprise.list
--proxmox-backup-server: setuid-binary usr/lib/x86_64-linux-gnu/proxmox-backup/sg-tape-cmd 4755 root/root
-+proxmox-backup-server: setuid-binary usr/lib/aarch64-linux-gnu/proxmox-backup/sg-tape-cmd 4755 root/root
- proxmox-backup-server: systemd-service-file-refers-to-unusual-wantedby-target lib/systemd/system/proxmox-backup-banner.service getty.target
--proxmox-backup-server: uses-dpkg-database-directly usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-api
--proxmox-backup-server: uses-dpkg-database-directly usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-proxy
-+proxmox-backup-server: uses-dpkg-database-directly usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-api
-+proxmox-backup-server: uses-dpkg-database-directly usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-proxy
- proxmox-backup-server: uses-dpkg-database-directly usr/sbin/proxmox-backup-debug
-diff -ur -x .git a/proxmox-backup/debian/proxmox-backup-file-restore.install b/proxmox-backup/debian/proxmox-backup-file-restore.install
---- a/proxmox-backup/debian/proxmox-backup-file-restore.install        2022-09-11 13:16:49.848555191 +0000
-+++ b/proxmox-backup/debian/proxmox-backup-file-restore.install        2022-09-11 13:17:00.560596487 +0000
+ proxmox-backup-server: package-installs-apt-sources [etc/apt/sources.list.d/pbs-enterprise.list]
+-proxmox-backup-server: elevated-privileges 4755 root/root [usr/lib/x86_64-linux-gnu/proxmox-backup/sg-tape-cmd]
++proxmox-backup-server: elevated-privileges 4755 root/root [usr/lib/aarch64-linux-gnu/proxmox-backup/sg-tape-cmd]
+ proxmox-backup-server: systemd-service-file-refers-to-unusual-wantedby-target getty.target [lib/systemd/system/proxmox-backup-banner.service]
+-proxmox-backup-server: uses-dpkg-database-directly [usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-api]
+-proxmox-backup-server: uses-dpkg-database-directly [usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-proxy]
++proxmox-backup-server: uses-dpkg-database-directly [usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-api]
++proxmox-backup-server: uses-dpkg-database-directly [usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-proxy]
+ proxmox-backup-server: uses-dpkg-database-directly [usr/sbin/proxmox-backup-debug]
+diff -Nru10 -x .git a/proxmox-backup/debian/proxmox-backup-file-restore.install proxmox-backup/debian/proxmox-backup-file-restore.install
+--- a/proxmox-backup/debian/proxmox-backup-file-restore.install	2023-09-01 21:14:12.074115877 +0800
++++ b/proxmox-backup/debian/proxmox-backup-file-restore.install	2023-09-01 21:12:47.357815918 +0800
 @@ -1,4 +1,4 @@
  usr/bin/proxmox-file-restore
- usr/share/man/man1/proxmox-file-restore.1
- usr/share/zsh/vendor-completions/_proxmox-file-restore
 -usr/lib/x86_64-linux-gnu/proxmox-backup/file-restore/proxmox-restore-daemon
 +usr/lib/aarch64-linux-gnu/proxmox-backup/file-restore/proxmox-restore-daemon
-diff -ur -x .git a/proxmox-backup/debian/proxmox-backup-file-restore.postinst b/proxmox-backup/debian/proxmox-backup-file-restore.postinst
---- a/proxmox-backup/debian/proxmox-backup-file-restore.postinst       2022-09-11 13:16:49.848555191 +0000
-+++ b/proxmox-backup/debian/proxmox-backup-file-restore.postinst       2022-09-11 13:17:00.560596487 +0000
-@@ -4,7 +4,7 @@
- 
+ usr/share/man/man1/proxmox-file-restore.1
+ usr/share/zsh/vendor-completions/_proxmox-file-restore
+diff -Nru10 -x .git a/proxmox-backup/debian/proxmox-backup-file-restore.postinst b/proxmox-backup/debian/proxmox-backup-file-restore.postinst
+--- a/proxmox-backup/debian/proxmox-backup-file-restore.postinst	2023-09-01 21:14:12.078116092 +0800
++++ b/proxmox-backup/debian/proxmox-backup-file-restore.postinst	2023-09-01 21:12:47.357815918 +0800
+@@ -1,17 +1,17 @@
+ #!/bin/sh
+
+ set -e
+
  update_initramfs() {
      # regenerate initramfs for single file restore VM
 -    INST_PATH="/usr/lib/x86_64-linux-gnu/proxmox-backup/file-restore"
 +    INST_PATH="/usr/lib/aarch64-linux-gnu/proxmox-backup/file-restore"
      CACHE_PATH="/var/cache/proxmox-backup/file-restore-initramfs.img"
      CACHE_PATH_DBG="/var/cache/proxmox-backup/file-restore-initramfs-debug.img"
- 
-diff -ur -x .git a/proxmox-backup/debian/proxmox-backup-server.install b/proxmox-backup/debian/proxmox-backup-server.install
---- a/proxmox-backup/debian/proxmox-backup-server.install      2022-09-11 13:16:49.848555191 +0000
-+++ b/proxmox-backup/debian/proxmox-backup-server.install      2022-09-11 13:17:00.564596502 +0000
-@@ -4,11 +4,11 @@
+
+     # cleanup first, in case proxmox-file-restore was uninstalled since we do
+     # not want an unuseable image lying around
+     rm -f "$CACHE_PATH"
+
+     if [ ! -f "$INST_PATH/initramfs.img" ]; then
+         echo "proxmox-backup-restore-image is not installed correctly, skipping update" >&2
+         exit 0
+diff -Nru10 -x .git a/proxmox-backup/debian/proxmox-backup-server.install b/proxmox-backup/debian/proxmox-backup-server.install
+--- a/proxmox-backup/debian/proxmox-backup-server.install	2023-09-01 21:14:46.375993452 +0800
++++ b/proxmox-backup/debian/proxmox-backup-server.install	2023-09-01 21:12:47.357815918 +0800
+@@ -1,24 +1,24 @@
+ etc/pbs-enterprise.list /etc/apt/sources.list.d/
+ etc/proxmox-backup-banner.service /lib/systemd/system/
  etc/proxmox-backup-daily-update.service /lib/systemd/system/
  etc/proxmox-backup-daily-update.timer /lib/systemd/system/
- etc/pbs-enterprise.list /etc/apt/sources.list.d/
+ etc/proxmox-backup-proxy.service /lib/systemd/system/
+ etc/proxmox-backup.service /lib/systemd/system/
+ usr/bin/pmt
+ usr/bin/pmtx
+ usr/bin/proxmox-tape
 -usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-api
--usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-proxy
 -usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-banner
+-usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-backup-proxy
 -usr/lib/x86_64-linux-gnu/proxmox-backup/proxmox-daily-update
 -usr/lib/x86_64-linux-gnu/proxmox-backup/sg-tape-cmd
 +usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-api
-+usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-proxy
 +usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-banner
++usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-backup-proxy
 +usr/lib/aarch64-linux-gnu/proxmox-backup/proxmox-daily-update
 +usr/lib/aarch64-linux-gnu/proxmox-backup/sg-tape-cmd
+ usr/sbin/pbs2to3
  usr/sbin/proxmox-backup-debug
  usr/sbin/proxmox-backup-manager
- usr/bin/pmtx
+ usr/share/javascript/proxmox-backup/css/ext6-pbs.css
+ usr/share/javascript/proxmox-backup/images
+ usr/share/javascript/proxmox-backup/index.hbs
+ usr/share/javascript/proxmox-backup/js/proxmox-backup-gui.js
+ usr/share/man/man1/pbs2to3.1
+ usr/share/man/man1/pmt.1
+ usr/share/man/man1/pmtx.1
