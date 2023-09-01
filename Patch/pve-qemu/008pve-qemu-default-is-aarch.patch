@@ -1,23 +1,43 @@
-diff -ur pve-src/pve-qemu/debian/pve-qemu-kvm.links pve-maker/pve-qemu/debian/pve-qemu-kvm.links
---- pve-src/pve-qemu/debian/pve-qemu-kvm.links	2022-10-09 14:10:22.324534118 +0000
-+++ pve-maker/pve-qemu/debian/pve-qemu-kvm.links	2022-12-21 03:50:20.334059370 +0000
-@@ -1,7 +1,4 @@
--usr/bin/qemu-system-x86_64 usr/bin/kvm
--
--# qemu-system-i386 and qemu-system-x86_64 provides the same hardware emulation
--usr/bin/qemu-system-x86_64 usr/bin/qemu-system-i386
-+usr/bin/qemu-system-aarch64 usr/bin/kvm
- 
+diff -Nru10 -x .git a/debian/pve-qemu-kvm.links b/debian/pve-qemu-kvm.links
+--- a/debian/pve-qemu-kvm.links	2023-09-01 20:59:39.259597729 +0800
++++ b/debian/pve-qemu-kvm.links	2023-09-01 22:35:29.580930034 +0800
+@@ -1,13 +1,13 @@
  # also use aarch64 for 32 bit arm
  usr/bin/qemu-system-aarch64 usr/bin/qemu-system-arm
-diff -ur pve-src/pve-qemu/debian/rules pve-maker/pve-qemu/debian/rules
---- pve-src/pve-qemu/debian/rules	2022-12-16 12:44:59.919592525 +0000
-+++ pve-maker/pve-qemu/debian/rules	2022-12-21 03:49:27.660434980 +0000
-@@ -46,7 +46,6 @@
- 	--localstatedir=/var \
- 	--prefix=/usr \
- 	--sysconfdir=/etc \
--	--target-list=$(ARCH)-softmmu,aarch64-softmmu \
- 	--with-suffix="kvm" \
- 	--with-pkgversion="${DEB_SOURCE}_${DEB_VERSION_UPSTREAM_REVISION}" \
- 	--audio-drv-list="alsa" \
+-usr/bin/qemu-system-x86_64 usr/bin/kvm
++usr/bin/qemu-system-aarch64 usr/bin/kvm
+ # qemu-system-i386 and qemu-system-x86_64 provides the same hardware emulation
+ usr/bin/qemu-system-x86_64 usr/bin/qemu-system-i386
+ # upstream provides a qemu man page,
+ # we symlink to kvm for backward compatibility
+ # and to qemu-system-{i386,x86_64} to fullfill our 'Provides: qemu-system-x86'
+ usr/share/man/man1/qemu.1  usr/share/man/man1/kvm.1
+ usr/share/man/man1/qemu.1  usr/share/man/man1/qemu-system-aarch64.1
+ usr/share/man/man1/qemu.1  usr/share/man/man1/qemu-system-arm.1
+ usr/share/man/man1/qemu.1  usr/share/man/man1/qemu-system-i386.1
+ usr/share/man/man1/qemu.1  usr/share/man/man1/qemu-system-x86_64.1
+diff -Nru10 -x .git a/debian/rules b/debian/rules
+--- a/debian/rules	2023-09-01 20:59:39.259597729 +0800
++++ b/debian/rules	2023-09-01 22:35:43.537024569 +0800
+@@ -36,21 +36,20 @@
+ 	cp -f /usr/share/misc/config.guess config.guess
+ endif
+
+ 	# guest-agent is only required for guest systems
+ 	./configure \
+ 	    --with-git-submodules=ignore \
+ 	    --docdir=/usr/share/doc/pve-qemu-kvm \
+ 	    --localstatedir=/var \
+ 	    --prefix=/usr \
+ 	    --sysconfdir=/etc \
+-	    --target-list=$(HOST_CPU)-softmmu,aarch64-softmmu \
+ 	    --with-suffix="kvm" \
+ 	    --with-pkgversion="${DEB_SOURCE}_${DEB_VERSION_UPSTREAM_REVISION}" \
+ 	    --audio-drv-list="alsa" \
+ 	    --datadir=/usr/share \
+ 	    --libexecdir=/usr/lib/kvm \
+ 	    --disable-capstone \
+ 	    --disable-gtk \
+ 	    --disable-guest-agent \
+ 	    --disable-guest-agent-msi \
+ 	    --disable-libnfs \
